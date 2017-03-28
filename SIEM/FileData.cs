@@ -12,6 +12,8 @@ namespace SIEM
         public string name { get; set; }
         public string type { get; set; }
         public DateTime created { get; set; }
+        public string path { get; set; }
+        public string[,] csvData { get; set; }
 
         public FileData()
         {
@@ -36,9 +38,14 @@ namespace SIEM
                 if (mruToken != null)
                 {
                     Windows.Storage.IStorageItem item = await mru.GetItemAsync(mruToken);
-                    RecentFiles.Add(new FileData { name = item.Name, created = item.DateCreated.LocalDateTime, type = "CSV" });
+                    RecentFiles.Add(new FileData { name = item.Name, created = item.DateCreated.LocalDateTime, type = "CSV", path=item.Path });
                 }
             }
+        }
+
+        public async void getCSVData()
+        {
+
         }
     }
 }

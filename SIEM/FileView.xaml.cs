@@ -29,7 +29,7 @@ namespace SIEM
             this.ViewModel = new FileDataVM();
             if (ViewModel.RecentFiles.Count != 0)
             {
-                FileList.Visibility = Visibility.Visible;
+                FileViewGrid.Visibility = Visibility.Visible;
                 FileEmpty.Visibility = Visibility.Collapsed;
             }
         }
@@ -41,7 +41,7 @@ namespace SIEM
             fIO.OpenCSV();
             if (ViewModel.RecentFiles.Count != 0)
             {
-                FileList.Visibility = Visibility.Visible;
+                FileViewGrid.Visibility = Visibility.Visible;
                 FileEmpty.Visibility = Visibility.Collapsed;
                 Bindings.Update();
             }

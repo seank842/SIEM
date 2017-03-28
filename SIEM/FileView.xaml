@@ -9,24 +9,33 @@
 
     <Grid Background="LightGray">
         <Rectangle Height="48" Fill="Lavender" VerticalAlignment="Top" />
-        <ListView Name="FileList" ItemsSource="{x:Bind ViewModel.RecentFiles}" HorizontalAlignment="left" Width="200" Visibility="Collapsed" Margin="0,48,0,0"
+        <Grid Name="FileViewGrid" Visibility="Visible">
+            <StackPanel Width="194" Height="40" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="6,48,0,0" Orientation="Horizontal">
+                <TextBlock FontSize="25" Text="Recent Files" HorizontalAlignment="Left" Width="150" Height="auto"/>
+                <Button Content="&#xE710;" Width="44" Click="FileAdd_Click"/>
+            </StackPanel>
+            <ListView Name="FileList" ItemsSource="{x:Bind ViewModel.RecentFiles}" HorizontalAlignment="left" Width="200" Margin="0,93,0,0"
                   ScrollViewer.VerticalScrollBarVisibility="Auto"
                   ScrollViewer.VerticalScrollMode="Enabled"
                   ScrollViewer.HorizontalScrollBarVisibility="Auto"
                   ScrollViewer.HorizontalScrollMode="Enabled">
-            <ListView.ItemTemplate>
-                <DataTemplate x:DataType="local:FileData">
-                    <StackPanel Orientation="Horizontal" Margin="6">
-                        <SymbolIcon Symbol="OpenFile" Margin="0,0,12,0"/>
-                        <StackPanel>
-                            <TextBlock Text="{x:Bind name}" FontWeight="Bold"/>
-                            <TextBlock Text="{x:Bind type}"/>
-                            <TextBlock Text="{x:Bind created}"/>
+                <ListView.ItemTemplate>
+                    <DataTemplate x:DataType="local:FileData">
+                        <StackPanel Orientation="Horizontal" Margin="6">
+                            <SymbolIcon Symbol="OpenFile" Margin="0,0,12,0"/>
+                            <StackPanel>
+                                <TextBlock Text="{x:Bind name}" FontWeight="Bold"/>
+                                <TextBlock Text="{x:Bind type}"/>
+                                <TextBlock Text="{x:Bind created}"/>
+                            </StackPanel>
                         </StackPanel>
-                    </StackPanel>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            <StackPanel DataContext="{Binding SelectedItem, ElementName=FileList}" HorizontalAlignment="Right" VerticalAlignment="Top" Width="1080" Height="672" Margin="0,48,0,0">
+                <TextBlock Text="Test" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="100"/>
+            </StackPanel>
+        </Grid>
         <StackPanel Name="FileEmpty" HorizontalAlignment="Center" VerticalAlignment="Center">
             <TextBlock FontSize="54" Text="It's empty here!" Height="76" Margin="0,0,0,40"/>
             <Button x:Name="AddFile" HorizontalAlignment="Center" Height="28" Width="84" CharacterSpacing="-4" Content="Add File"  Click="FileAdd_Click"/>
