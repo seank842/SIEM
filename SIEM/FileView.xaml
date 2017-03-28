@@ -1,0 +1,35 @@
+﻿<Page
+    x:Class="SIEM.FileView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:SIEM"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Grid Background="LightGray">
+        <Rectangle Height="48" Fill="Lavender" VerticalAlignment="Top" />
+        <ListView Name="FileList" ItemsSource="{x:Bind ViewModel.RecentFiles}" HorizontalAlignment="left" Width="200" Visibility="Collapsed" Margin="0,48,0,0"
+                  ScrollViewer.VerticalScrollBarVisibility="Auto"
+                  ScrollViewer.VerticalScrollMode="Enabled"
+                  ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                  ScrollViewer.HorizontalScrollMode="Enabled">
+            <ListView.ItemTemplate>
+                <DataTemplate x:DataType="local:FileData">
+                    <StackPanel Orientation="Horizontal" Margin="6">
+                        <SymbolIcon Symbol="OpenFile" Margin="0,0,12,0"/>
+                        <StackPanel>
+                            <TextBlock Text="{x:Bind name}" FontWeight="Bold"/>
+                            <TextBlock Text="{x:Bind type}"/>
+                            <TextBlock Text="{x:Bind created}"/>
+                        </StackPanel>
+                    </StackPanel>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        <StackPanel Name="FileEmpty" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <TextBlock FontSize="54" Text="It's empty here!" Height="76" Margin="0,0,0,40"/>
+            <Button x:Name="AddFile" HorizontalAlignment="Center" Height="28" Width="84" CharacterSpacing="-4" Content="Add File"  Click="FileAdd_Click"/>
+        </StackPanel>
+    </Grid>
+</Page>
