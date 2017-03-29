@@ -106,6 +106,7 @@
     <Compile Include="DataView.xaml.cs">
       <DependentUpon>DataView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ErrorHandler.cs" />
     <Compile Include="FileData.cs" />
     <Compile Include="FileIO.cs" />
     <Compile Include="FileView.xaml.cs">

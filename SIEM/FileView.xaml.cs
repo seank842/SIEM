@@ -3,8 +3,12 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
+using System.Diagnostics;
+using Windows.ApplicationModel.Core;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -52,6 +56,21 @@ namespace SIEM
             var frame = this.Frame;
             if (frame.Content != null)
                 ((Frame)frame.Content).Navigate(typeof(DataView));
+        }
+
+        private async void FileList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            LoadCSVPRing.IsActive = true;
+            await ViewModel.RecentFiles.ElementAt(FileList.SelectedIndex).GetCSVDataAsync();
+            for(int c = 0; c < ViewModel.RecentFiles.ElementAt(FileList.SelectedIndex).csvData.GetLength(0); c++)
+            {
+                for(int r = 0; r < ViewModel.RecentFiles.ElementAt(FileList.SelectedIndex).csvData.GetLength(1); r++)
+                {
+                    Debug.Write(String.Format("{0}\t", ViewModel.RecentFiles.ElementAt(FileList.SelectedIndex).csvData[c, r]));
+                }
+                Debug.Write("\n");
+            }
+            LoadCSVPRing.IsActive = false;
         }
     }
 }
