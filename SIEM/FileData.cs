@@ -4,7 +4,9 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Dynamic;
+using Microsoft.CSharp;
+using System.CodeDom.Compiler;
+using System.CodeDom;
 
 namespace SIEM
 {
@@ -17,8 +19,6 @@ namespace SIEM
         public string[,] csvData { get; set; }
         public int cols { get; set; }
         public int rows { get; set; }
-        public object CSVData { get; set; }
-        public CSVDataDynamicVM CSVDataVM { get; set; }
 
         public FileData()
         {
@@ -73,25 +73,15 @@ namespace SIEM
                 // See how many rows and columns there are.
                 rows = lines.Length;
                 cols = lines[0].Split(',').Length;
+                string className = "csvData";
 
                 string[] line_r = lines[0].Split(',');
                 var props = new Dictionary<string, Type>();
-                for (int c = 0; c <= cols; c++)
+                for (int c = 0; c < cols; c++)
                 {
                     props.Add("Header" + c, typeof(string));
                 }
-
-                // Load the array.
-                for (int r = 0; r < rows; r++)
-                {
-                    for (int c = 0; c < cols; c++)
-                    {
-                        csvData[r, c] = line_r[c];
-                    }
-                }
-                FillHeadersClass(props);
-                CSVDataVM = new CSVDataDynamicVM(csvData, cols, rows);
-
+                CreateClass(className, props);
             }
             else
             {
@@ -100,9 +90,20 @@ namespace SIEM
             }
         }
 
-        private void FillHeadersClass(IDictionary<string, Type> props)
+        private void CreateClass(string name, IDictionary<string, Type> props)
         {
-            CSVData = new CSVDataDynamic(props);
+            var csc = new CSharpCodeProvider(new Dictionary<string, string>() { { "CompilerVersion", "v4.0" } });
+            var param = new CompilerParameters(new[] { "mscorlib.dll", "System.Core.dll" }, "data.Dynamic.dll", false);
+            param.GenerateExecuteable = false;
+
+            var compUnit = new CodeCompileUnit();
+            var ns = new CodeNamespace("Data.Dynamic");
+            compUnit.Namespaces.Add(ns);
+            ns.Imports.Add(new CodeNamespaceImport("System"));
+
+            var classType = newCodeTypeDeclaration(name);
+            classType.Attributes = MemberAttributes.Public;
+            ns.Types.Add(classType);
         }
     }
     public class FileDataVM {

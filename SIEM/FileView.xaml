@@ -34,9 +34,9 @@
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
-            <Grid Margin="200,48,0,0">
+            <Grid DataContext="{Binding SelectedItem, ElementName=FileList}" Margin="200,48,0,0">
                 <ProgressRing x:Name="LoadCSVPRing" IsActive="False" Height="100" Width="100" HorizontalAlignment="Center" VerticalAlignment="Center" />
-                <syncfusion:SfDataGrid x:Name="dataGrid" Visibility="Collapsed" AutoGenerateColumns="True" ItemsSource="{Binding ViewModel.RecentFiles.CSVData}">
+                <syncfusion:SfDataGrid x:Name="dataGrid" Visibility="Collapsed" AutoGenerateColumns="True" ItemsSource="{Binding ViewModel.RecentFiles.csvData}">
                     
                 </syncfusion:SfDataGrid>
             </Grid>
