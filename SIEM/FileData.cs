@@ -4,6 +4,9 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.CSharp;
+using System.CodeDom.Compiler;
+using System.CodeDom;
 
 namespace SIEM
 {
@@ -20,7 +23,7 @@ namespace SIEM
         public FileData()
         {
         }
-
+        /*
         public async Task GetCSVDataAsync()
         {
             if (csvData == null)
@@ -30,7 +33,8 @@ namespace SIEM
 
                 // Split into lines.
                 whole_file = whole_file.Replace('\n', '\r');
-                string[] lines = whole_file.Split(new char[] { '\r' }, StringSplitOptions.RemoveEmptyEntries);
+                string[] lines = whole_file.Split(new char[] { '\r' }, StringSplitOptions.None);
+
                 // See how many rows and columns there are.
                 rows = lines.Length;
                 cols = lines[0].Split(',').Length;
@@ -53,6 +57,53 @@ namespace SIEM
                 ErrorHandler eH = new ErrorHandler();
                 eH.ErrorHandle(2);
             }
+        }*/
+        
+        public async Task GetCSVDataAsync()
+        {
+            if (csvData == null)
+            {
+                // Get the file's text.
+                string whole_file = await Task.Run(async () => (await System.IO.File.OpenText(path).ReadToEndAsync()));
+
+                // Split into lines.
+                whole_file = whole_file.Replace('\n', '\r');
+                string[] lines = whole_file.Split(new char[] { '\r' }, StringSplitOptions.None);
+
+                // See how many rows and columns there are.
+                rows = lines.Length;
+                cols = lines[0].Split(',').Length;
+                string className = "csvData";
+
+                string[] line_r = lines[0].Split(',');
+                var props = new Dictionary<string, Type>();
+                for (int c = 0; c < cols; c++)
+                {
+                    props.Add("Header" + c, typeof(string));
+                }
+                CreateClass(className, props);
+            }
+            else
+            {
+                ErrorHandler eH = new ErrorHandler();
+                eH.ErrorHandle(2);
+            }
+        }
+
+        private void CreateClass(string name, IDictionary<string, Type> props)
+        {
+            var csc = new CSharpCodeProvider(new Dictionary<string, string>() { { "CompilerVersion", "v4.0" } });
+            var param = new CompilerParameters(new[] { "mscorlib.dll", "System.Core.dll" }, "data.Dynamic.dll", false);
+            param.GenerateExecuteable = false;
+
+            var compUnit = new CodeCompileUnit();
+            var ns = new CodeNamespace("Data.Dynamic");
+            compUnit.Namespaces.Add(ns);
+            ns.Imports.Add(new CodeNamespaceImport("System"));
+
+            var classType = newCodeTypeDeclaration(name);
+            classType.Attributes = MemberAttributes.Public;
+            ns.Types.Add(classType);
         }
     }
     public class FileDataVM {
@@ -61,10 +112,10 @@ namespace SIEM
 
         public FileDataVM()
         {
-            init();
+            Init();
         }
 
-        public async void init()
+        public async void Init()
         {
             var mru = Windows.Storage.AccessCache.StorageApplicationPermissions.MostRecentlyUsedList;
             foreach (Windows.Storage.AccessCache.AccessListEntry entry in mru.Entries)
