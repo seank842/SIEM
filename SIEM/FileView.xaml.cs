@@ -73,6 +73,7 @@ namespace SIEM
             {
                 LoadCSVPRing.IsActive = true;
                 await ViewModel.RecentFiles.ElementAt(FileList.SelectedIndex).GetCSVDataAsync();
+
                 SfDataGrid dataGrid = new SfDataGrid();
                 LoadCSVPRing.IsActive = false;
                 dataGrid.Visibility = Visibility.Visible;
