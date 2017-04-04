@@ -71,9 +71,11 @@ namespace SIEM
         {
             if (ViewModel.RecentFiles.ElementAt(FileList.SelectedIndex).csvData == null)
             {
+                Debug.Write(ViewModel.RecentFiles.ElementAt(FileList.SelectedIndex).name);
                 LoadCSVPRing.IsActive = true;
-                await ViewModel.RecentFiles.ElementAt(FileList.SelectedIndex).GetCSVDataAsync();
+               // await ViewModel.RecentFiles.ElementAt(FileList.SelectedIndex).SetCSVData();
                 SfDataGrid dataGrid = new SfDataGrid();
+                dataGrid.ItemsSource = ViewModel.RecentFiles.ElementAt(FileList.SelectedIndex).csvData;
                 LoadCSVPRing.IsActive = false;
                 dataGrid.Visibility = Visibility.Visible;
             }
