@@ -33,7 +33,8 @@ namespace SIEM
         {
             InitializeComponent();
             ViewModel = new FileDataVM();
-
+            SfDataGrid dataGrid = new SfDataGrid();
+            gridData.Children.Add(dataGrid);
             if (ViewModel.RecentFiles.Count != 0)
             {
                 FileViewGrid.Visibility = Visibility.Visible;
@@ -66,18 +67,16 @@ namespace SIEM
             if (frame.Content != null)
                 ((Frame)frame.Content).Navigate(typeof(DataView));
         }
-
+        public CsvDataVM CDViewModel { get; set; }
         private async void FileList_SelectionChanged(object sender, Windows.UI.Xaml.Controls.SelectionChangedEventArgs e)
         {
             if (ViewModel.RecentFiles.ElementAt(FileList.SelectedIndex).csvData == null)
             {
-                Debug.Write(ViewModel.RecentFiles.ElementAt(FileList.SelectedIndex).name);
                 LoadCSVPRing.IsActive = true;
-               // await ViewModel.RecentFiles.ElementAt(FileList.SelectedIndex).SetCSVData();
-                SfDataGrid dataGrid = new SfDataGrid();
-                dataGrid.ItemsSource = ViewModel.RecentFiles.ElementAt(FileList.SelectedIndex).csvData;
+                await ViewModel.RecentFiles.ElementAt(FileList.SelectedIndex).SetCSVData();
+                CDViewModel = new CsvDataVM(ViewModel.RecentFiles.ElementAt(FileList.SelectedIndex).csvData);
+                dataGrid.ItemsSource=CDViewModel.CsvData;
                 LoadCSVPRing.IsActive = false;
-                dataGrid.Visibility = Visibility.Visible;
             }
             else
             {

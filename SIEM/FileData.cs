@@ -22,12 +22,11 @@ namespace SIEM
         public bool headers { get; set; }
         public DateTime created { get; set; }
         public string path { get; set; }
-        //public string[,] csvData { get; set; }
+        public string[,] csvData { get; set; }
 
         public FileData()
         {
         }
-        /*
         public async Task SetCSVData()
         {
             if (csvData == null)
@@ -37,7 +36,7 @@ namespace SIEM
                 
                 // Split into lines.
                 whole_file = whole_file.Replace('\n', '\r');
-                string[] lines = whole_file.Split(new char[] { '\r' }, StringSplitOptions.None);
+                string[] lines = whole_file.Split(new char[] { '\r' }, StringSplitOptions.RemoveEmptyEntries);
                 
                 // See how many rows and columns there are.
                 int rows = lines.Length;
@@ -52,7 +51,6 @@ namespace SIEM
                     string[] line_r = lines[r].Split(',');
                     for (int c = 0; c < cols; c++)
                         csvData[r, c] = line_r[c];
-                    
                 }
             }
             else
@@ -60,11 +58,6 @@ namespace SIEM
                 ErrorHandler eH = new ErrorHandler();
                 eH.ErrorHandle(2);
             }
-        }*/
-        
-        public Task SetCSVData()
-        {
-            
         }
     }
     public class FileDataVM {
