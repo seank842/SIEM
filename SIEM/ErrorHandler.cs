@@ -22,6 +22,14 @@ namespace SIEM
                     title = "test";
                     content = "entered";
                     break;
+                case 4:
+                    title = "Not Enough Files!";
+                    content = "There are two files needed to compare";
+                    break;
+                case 5:
+                    title = "Too Many Files!";
+                    content = "There are two files needed to compare";
+                    break;
             }
             ContentDialog FileUnableToRead = new ContentDialog()
             {

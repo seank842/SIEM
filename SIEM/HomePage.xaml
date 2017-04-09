@@ -9,6 +9,6 @@
 
     <Grid Background="LightGray">
         <Rectangle Height="48" Fill="Lavender" VerticalAlignment="Top" />
-        <TextBlock Text="&#xe10f;" FontFamily="Segoe MDL2 Assets" FontSize="300" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" />
+        
     </Grid>
 </Page>

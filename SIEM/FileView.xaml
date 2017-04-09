@@ -6,6 +6,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:syncfusion="using:Syncfusion.UI.Xaml.Grid"
+    xmlns:charts="using:Syncfusion.UI.Xaml.Charts"
     mc:Ignorable="d">
 
     <Page.Resources>
@@ -17,10 +18,11 @@
         <Rectangle Height="48" Fill="Lavender" VerticalAlignment="Top" />
         <Grid Name="FileViewGrid" Visibility="Collapsed">
             <StackPanel Width="194" Height="40" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="6,48,0,0" Orientation="Horizontal">
-                <TextBlock FontSize="25" Text="Recent Files" HorizontalAlignment="Left" Width="150" Height="auto"/>
-                <Button Content="&#xE710;" FontFamily="Segoe MDL2 Assets" Width="44" Click="FileAdd_Click" Height="40" Background="LightGray"/>
+                <TextBlock Text="Recent Files" HorizontalAlignment="Left" FontSize="21.5"  Width="120" Height="auto" FontWeight="Bold" TextAlignment="Center"/>
+                <Button Content="&#xE710;" FontFamily="Segoe MDL2 Assets" FontSize="18" Width="40" Height="40" Click="FileAdd_Click" Background="LightGray"/>
+                <Button Content="&#xE11E;" FontFamily="Segoe MDL2 Assets" FontSize="18" Width="40" Height="40" Click="Compare_Button_Click" Background="LightGray"/>
             </StackPanel>
-            <ListView x:Name="FileList" ItemsSource="{x:Bind ViewModel.RecentFiles}" HorizontalAlignment="left" Width="200" Margin="0,93,0,0"
+            <ListView x:Name="FileList" ItemsSource="{x:Bind ViewModel.RecentFiles}" HorizontalAlignment="left" Width="200" Margin="0,93,50,0"
                   ScrollViewer.VerticalScrollBarVisibility="Auto"
                   ScrollViewer.VerticalScrollMode="Enabled"
                   ScrollViewer.HorizontalScrollBarVisibility="Auto"
@@ -29,6 +31,7 @@
                 <ListView.ItemTemplate>
                     <DataTemplate x:DataType="local:FileData">
                         <StackPanel Orientation="Horizontal" Margin="6">
+                            <CheckBox IsChecked="{x:Bind Path=IsSelected, Mode=TwoWay}" MinWidth="20"/>
                             <SymbolIcon Symbol="OpenFile" Margin="0,0,12,0"/>
                             <StackPanel>
                                 <TextBlock Text="{x:Bind name}" FontWeight="Bold"/>
@@ -40,10 +43,9 @@
                 </ListView.ItemTemplate>
             </ListView>
             <Grid Margin="200,48,0,0">
-                
-                <ProgressRing x:Name="LoadCSVPRing" IsActive="False" Height="100" Width="100" HorizontalAlignment="Center" VerticalAlignment="Center" />
-                <syncfusion:SfDataGrid x:Name="dataGrid" Visibility="Collapsed"  AllowFiltering="True" AllowSorting="True" 
-                         Grid.Column="0"
+                <Grid>
+                    <ProgressRing x:Name="LoadCSVPRing" IsActive="False" Height="100" Width="100" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    <syncfusion:SfDataGrid x:Name="dataGrid" Visibility="Collapsed"  AllowFiltering="True" AllowSorting="True"
                          AutoGenerateColumns="true"
                          SelectionUnit="Row"
                          NavigationMode="Cell"
@@ -52,7 +54,8 @@
                          FilterPopupStyle="{StaticResource filterControlStyle}"
                          AllowGrouping="True"
                          ShowGroupDropArea="True">
-                </syncfusion:SfDataGrid>
+                    </syncfusion:SfDataGrid>
+                </Grid>
             </Grid>
         </Grid>
         <StackPanel Name="FileEmpty" HorizontalAlignment="Center" VerticalAlignment="Center">

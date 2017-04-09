@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Windows.Storage;
 using Windows.Storage.Pickers;
+using Windows.Storage.Streams;
 
 namespace SIEM
 {
@@ -29,6 +31,11 @@ namespace SIEM
                 ErrorHandler eHandle = new ErrorHandler();
                 eHandle.ErrorHandle(1);
             }
+        }
+
+        internal static Task<IBuffer> ReadBufferAsynx(StorageFile file)
+        {
+            throw new NotImplementedException();
         }
     }
 }

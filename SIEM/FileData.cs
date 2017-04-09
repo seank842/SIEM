@@ -1,17 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using Microsoft.CSharp;
-using System.CodeDom.Compiler;
-using System.CodeDom;
-using System.Dynamic;
+using System.Security.Cryptography;
+using Syncfusion.Pdf.Cryptography;
 using System.IO;
-using System.Data;
-using System.Collections;
-using System.Diagnostics;
 
 namespace SIEM
 {
@@ -22,7 +14,10 @@ namespace SIEM
         public bool headers { get; set; }
         public DateTime created { get; set; }
         public string path { get; set; }
+        public byte[] hash { get; set; }
         public string[,] csvData { get; set; }
+        public bool? IsSelected { get; set; }
+        public CsvDataVM CDViewModel { get; set; } 
 
         public FileData()
         {
@@ -32,7 +27,7 @@ namespace SIEM
             if (csvData == null)
             {
                 // Get the file's text.
-                string whole_file = await Task.Run(async () => (await System.IO.File.OpenText(path).ReadToEndAsync()));
+                string whole_file = await Task.Run(async () => (await File.OpenText(path).ReadToEndAsync()));
                 
                 // Split into lines.
                 whole_file = whole_file.Replace('\n', '\r');
@@ -44,7 +39,6 @@ namespace SIEM
                 
                 // Allocate the data array.
                 csvData = new string[rows, cols];
-                Debug.Write(cols);
                 // Load the array.
                 for (int r = 0; r < rows; r++)
                 {
@@ -52,6 +46,8 @@ namespace SIEM
                     for (int c = 0; c < cols; c++)
                         csvData[r, c] = line_r[c];
                 }
+                CDViewModel = new CsvDataVM(csvData);
+                csvData = null;
             }
             else
             {
@@ -78,7 +74,11 @@ namespace SIEM
                 if (mruToken != null)
                 {
                     Windows.Storage.IStorageItem item = await mru.GetItemAsync(mruToken);
-                    RecentFiles.Add(new FileData { name = item.Name, created = item.DateCreated.LocalDateTime, type = "CSV", path=item.Path });
+                    using (var md5 = System.Security.Cryptography.MD5.Create())
+                    using (var stream = await Task.Run(() => (File.Open(item.Path, FileMode.Open))))
+                    {
+                        RecentFiles.Add(new FileData { name = item.Name, created = item.DateCreated.LocalDateTime, type = "CSV", path = item.Path, hash = md5.ComputeHash(stream), IsSelected = false });
+                    }
                 }
             }
         }
