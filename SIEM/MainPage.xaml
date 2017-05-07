@@ -28,9 +28,6 @@
 
                 <!-- File Button -->
                 <RadioButton Tag="&#xEC50;" Content="File Explorer" Style="{StaticResource SplitViewNavButtonStyle}" Checked="OnFileButtonChecked" />
-                
-                <!-- About button -->
-                <RadioButton Tag="&#xE783;" Content="About" Style="{StaticResource SplitViewNavButtonStyle}" Checked="OnAboutButtonChecked" />
             </StackPanel>
         </SplitView.Pane>
     </SplitView>

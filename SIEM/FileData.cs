@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
-using System.Security.Cryptography;
-using Syncfusion.Pdf.Cryptography;
 using System.IO;
 
 namespace SIEM

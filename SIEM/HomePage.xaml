@@ -9,6 +9,31 @@
 
     <Grid Background="LightGray">
         <Rectangle Height="48" Fill="Lavender" VerticalAlignment="Top" />
-        
+		<StackPanel Margin="0,48,0,0" Orientation="Vertical">
+			<TextBlock Text="Instructions" FontSize="30"/>
+			<StackPanel Orientation="Horizontal">
+				<TextBlock Text="&#xEC50;" FontFamily="Segoe MDL2 Assets"/>
+				<TextBlock Text="Click this to go to the main action page."/>
+			</StackPanel>
+			<TextBlock Text="Once in the page add a CSV file as instructed, then"/>
+			<StackPanel Orientation="Horizontal">
+				<TextBlock Text="&#xE710;" FontFamily="Segoe MDL2 Assets"/>
+				<TextBlock Text="Click this to add more files"/>
+			</StackPanel>
+			<StackPanel Orientation="Horizontal">
+				<TextBlock Text="&#xE11E;" FontFamily="Segoe MDL2 Assets"/>
+				<TextBlock Text="Click this to compare two files selected with the checkboxes"/>
+			</StackPanel>
+			<TextBlock Text="When you click on a file, the file will load to memory,"/>
+			<TextBlock Text="once finshed it will display the whole file in a datagrid."/>
+			<TextBlock Text="to sort by header double click the header(the application supports multiple sorts in order of which you ask to sort first),"/>
+			<TextBlock Text="to filter click the filter button on the header you want to filter by,"/>
+			<TextBlock Text="to group drag and drop the header just above the datagrid."/>
+			<TextBlock Text="Known Bugs" FontSize="30"/>
+			<TextBlock Text="When navigating to the action page files are checked but"/>
+			<TextBlock Text="are not recognised because of async methods not being waited on"/>
+			<TextBlock Text="Work around: click on add files and then close the dialog box"/>
+			<TextBlock Text="same work around for adding more files the app"/>
+		</StackPanel>
     </Grid>
 </Page>

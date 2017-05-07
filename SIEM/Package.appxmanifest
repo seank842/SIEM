@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest" xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10" IgnorableNamespaces="uap mp">
-  <Identity Name="49766seank842.SIEMHUDTest" Publisher="CN=3A9E0B13-0851-4258-B8DB-BE86B800265C" Version="0.2.3.0" />
+  <Identity Name="49766seank842.SIEMHUDTest" Publisher="CN=3A9E0B13-0851-4258-B8DB-BE86B800265C" Version="1.1.12.0" />
   <mp:PhoneIdentity PhoneProductId="40a62201-0c20-4c38-9c9a-e2448af64c26" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
     <DisplayName>SIEM_HUD_Test</DisplayName>
